@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Finder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="" alt="Logo" class="logo">
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#Enciclopedia">Enciclopedia</a>
+            <a href="#evoluções">Evoluções</a>
+            <a href="#Duelo">Duelo</a>
+            <a href="#Equipe">Equipe</a>
+        </nav>
+    </header>
+
+    <section>
+        <div class="container">
+            <h1>Buscar Pokémon</h1>
+            <input type="text" id="pokemonInput" placeholder="Digite o Nome do Pokémon ou o ID">
+            <button onclick="fetchPokemon()">Buscar</button>    
+            <div id="pokemonInfo"></div>
+        </div>
+
+        <div class="pokedex-container">
+            <h2>Pokédex</h2>
+            <div id="pokemonList" class="pokemon-list"></div>
+            <button id="loadMore" class="load-more">Carregar Mais</button>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
