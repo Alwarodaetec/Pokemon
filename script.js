@@ -1,3 +1,4 @@
+
 let offset = 0; // Posição inicial para a Pokédex
 const limit = 20; // Número de Pokémon por lote
 const pokemonList = document.getElementById('pokemonList');
@@ -99,46 +100,4 @@ function displayPokemon(pokemon) {
         <p><strong>Height:</strong> ${pokemon.height / 10} m</p>
         <p><strong>Weight:</strong> ${pokemon.weight / 10} kg</p>
     `;
-}
-
-
-async function fetchPokemonn() {
-    const pokemonNameOrId = document.getElementById('pokemonInput').value.toLowerCase();
-    const apiUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonNameOrId}`;
-    const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonNameOrId}/`;
-
-    try {
-        // Primeira requisição para dados básicos
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        // Atualiza o nome, imagem e informações básicas
-        document.getElementById('pokemon-name').textContent = data.name.toUpperCase();
-        document.getElementById('pokemon-image').src = data.sprites.front_default;
-        document.getElementById('pokemon-info').textContent = `
-            Tipo: ${data.types.map(typeInfo => typeInfo.type.name).join(', ')}
-            Altura: ${data.height / 10} m
-            Peso: ${data.weight / 10} kg
-        `;
-
-        // Segunda requisição para pegar a descrição
-        const speciesResponse = await fetch(speciesUrl);
-        const speciesData = await speciesResponse.json();
-
-        // Filtra a descrição em português (pt) ou inglês (en)
-        const descriptionEntry = speciesData.flavor_text_entries.find(entry => 
-            entry.language.name === 'pt' || entry.language.name === 'en'
-        );
-
-        // Exibe a descrição (ou uma mensagem se não for encontrada)
-        if (descriptionEntry) {
-            document.getElementById('pokemon-info').textContent += `\n\nDescrição: ${descriptionEntry.flavor_text.replace(/\n|\f/g, ' ')}`;
-        } else {
-            document.getElementById('pokemon-info').textContent += `\n\nDescrição: Descrição não disponível para este Pokémon.`;
-        }
-    } catch (error) {
-        document.getElementById('pokemon-info').textContent = "Pokémon não encontrado. Tente outro nome ou ID.";
-        document.getElementById('pokemon-name').textContent = "";
-        document.getElementById('pokemon-image').src = "";
-    }
 }
