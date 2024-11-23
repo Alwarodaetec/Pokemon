@@ -8,7 +8,7 @@ async function loadPokemonBatch(offset, limit) {
     const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
     const response = await fetch(url);
     const data = await response.json();
-    data.results.forEach(addPokemonCard);
+    data.results.forEach(addPokemonCard); // Adiciona um card para cada Pokémon
 }
 
 // Função para adicionar um card de Pokémon na Pokédex
@@ -22,6 +22,12 @@ async function addPokemonCard(pokemon) {
         <img src="${details.sprites.front_default}" alt="${details.name}">
         <h3>${details.name.charAt(0).toUpperCase() + details.name.slice(1)}</h3>
     `;
+
+    // Adiciona o evento de clique ao card para exibir a árvore de evolução
+    card.addEventListener('click', () => {
+        fetchEvolutionTree(details.name); // Passa o nome do Pokémon clicado para exibir a árvore de evolução
+    });
+
     pokemonList.appendChild(card);
 }
 
@@ -33,13 +39,6 @@ loadMoreButton.addEventListener('click', () => {
 
 // Carregar os primeiros Pokémon ao iniciar
 loadPokemonBatch(offset, limit);
-
-
-
-
-
-
-
 
 // Função para buscar a árvore de evolução de um Pokémon
 async function fetchEvolutionTree(pokemonNameOrId) {
@@ -105,15 +104,3 @@ document.getElementById('searchButton').addEventListener('click', () => {
         document.getElementById('evolutionTree').innerHTML = '<p class="error">Por favor, insira um nome ou ID.</p>';
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
