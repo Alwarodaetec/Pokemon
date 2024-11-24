@@ -25,23 +25,34 @@ header {
     height: auto;
 }
 
-
 .nav-links {
     display: flex;
     gap: 20px;
     flex-wrap: wrap; /* Permite quebra de linha em telas menores */
     justify-content: center; /* Centraliza os links horizontalmente */
     align-items: center; /* Alinha os links verticalmente */
+    position: relative; /* Necessário para posicionar a Pokébola */
 }
 
 .nav-links a {
     text-decoration: none;
     color: white;
     font-weight: bold;
+    position: relative; /* Para associar a Pokébola ao link */
 }
 
 .nav-links a:hover {
     text-decoration: underline;
+}
+
+/* Estilo da Pokébola */
+.pokeball-icon {
+    width: 24px; /* Tamanho da Pokébola */
+    height: 24px;
+    position: absolute;
+    top: -30px; /* Posiciona a Pokébola acima do link */
+    left: 50%; /* Centraliza horizontalmente no link */
+    transform: translateX(-50%); /* Ajusta a centralização */
 }
 
 /* Container */
@@ -140,6 +151,7 @@ button {
     }
 }
 
+
 .load-more {
     padding: 10px 20px;
     font-size: 16px;
@@ -209,25 +221,70 @@ button {
         padding: 8px 16px;
     }
 
-.pokemon-details {
-    padding: 15px; /* Ajusta o padding para telas menores */
+    .pokemon-details {
+        padding: 15px; /* Ajusta o padding para telas menores */
+    }
+
+    .pokemon-details p {
+        font-size: 14px; /* Reduz o tamanho da fonte */
+    }
 }
 
-.pokemon-details p {
-    font-size: 14px; /* Reduz o tamanho da fonte */
-}
+/* Estilo para exibir os Pokémon da equipe */
+.team-container {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 90%;
 }
 
+.team-members {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Três colunas fixas */
+    gap: 20px;
+    justify-items: center; /* Centraliza os itens */
+    padding: 20px;
+}
+
+.team-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    height: 200px;
+    position: relative; /* Para o botão de remoção */
+}
+
+.team-member img {
+    width: 100px;
+    height: 100px;
+}
+
+.team-member button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute; /* Posiciona o botão no canto inferior */
+    bottom: 10px;
+}
+
+.team-member button:hover {
+    background-color: darkred;
+}
 
 .evop {
-
     text-align: center;
-
 }
 
 .evolution-tree {
-
     text-align: center;
-
 }
 
