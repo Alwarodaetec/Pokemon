@@ -362,14 +362,14 @@ button {
 .pokemon-box {
     width: 200px;
     height: 300px;
-    border: 2px solid #007BFF;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); /* Sombra */
     border-radius: 10px;
-    background-color: #f2f2f2;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 10px;
+    background-color: aliceblue;
 }
 
 .pokemon-box img {
