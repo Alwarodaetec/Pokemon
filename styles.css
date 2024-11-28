@@ -22,6 +22,36 @@ header {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adiciona sombra para dar profundidade */
 }
 
+nav {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1; /* Permite que o menu ocupe o espaço restante */
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold; /* Letra forte (negrito) */
+    margin: 0 15px; /* Espaçamento entre os links */
+    transition: color 0.3s ease; /* Transição suave ao passar o mouse */
+}
+
+nav a:hover {
+    color: #FFD700; /* Cor de destaque ao passar o mouse */
+}
+
+header .right-images {
+    display: flex;
+    align-items: center;
+}
+
+header .right-images img {
+    width: 30px; /* Ajuste o tamanho das imagens */
+    height: 30px;
+    margin-left: 10px; /* Espaçamento entre as imagens */
+}
+
+
 .logo {
     width: 180px; /* Reduzido para melhor adaptação */
     height: auto;
@@ -57,6 +87,22 @@ header {
     transform: translateX(-50%); /* Ajusta a centralização */
 }
 
+#pokemonInput {
+    width: 100%; /* Ocupe toda a largura disponível */
+    max-width: 400px; /* Largura máxima para a barra de pesquisa */
+    padding: 10px 15px; /* Espaçamento interno */
+    background-color: white; /* Fundo branco */
+    border: none; /* Remove a borda */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave em volta */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: box-shadow 0.3s ease; /* Transição suave para a sombra */
+}
+
+#pokemonInput:focus {
+    outline: none; /* Remove o contorno ao focar */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra mais forte ao focar */
+}
 /* Container */
 .container {
     text-align: center;
@@ -74,9 +120,16 @@ input {
 }
 
 button {
-    padding: 10px 20px;
+    background-color: #005b8f; 
+    color: white; /* Preto */
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
     font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); /* Sombra */
+    transition: box-shadow 0.3s ease; /* Animação suave */
 }
 
 #pokemonInfo {
@@ -118,9 +171,16 @@ button {
 }
 
 .load-more {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-top: 20px;
+        background-color: #005b8f; /* Amarelo */
+        color: white; /* Preto */
+        padding: 15px 50px;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); /* Sombra */
+
 }
 
 /* Media Queries para Responsividade */
