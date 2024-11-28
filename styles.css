@@ -354,36 +354,44 @@ button {
 
 .pokemon-comparador {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
+    justify-content: center; /* Alinha as caixas de Pokémon e o VS no centro */
+    align-items: center; /* Alinha verticalmente os itens */
+    gap: 30px; /* Espaçamento entre as caixas e o "VS" */
 }
 
 .pokemon-box {
     width: 200px;
     height: 300px;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); /* Sombra */
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidade */
     border-radius: 10px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Coloca a imagem e o conteúdo na coluna */
     align-items: center;
     justify-content: center;
     padding: 10px;
-    background-color: aliceblue;
+    background-color: aliceblue; /* Fundo suave para a caixa */
 }
 
 .pokemon-box img {
-    width: 150px;
+    width: 150px; /* Tamanho da imagem do Pokémon */
     height: 150px;
-    margin-bottom: 10px;
+    margin-bottom: 10px; /* Espaço entre a imagem e qualquer conteúdo abaixo */
 }
 
 .vs {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #FF0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px; /* Ajuste o tamanho do "VS" */
+    height: 80px; /* Ajuste do "VS" */
+   
 }
 
+.vs img {
+    width: 50px;  /* Ajuste o tamanho da imagem do "VS" */
+    height: 50px; /* Ajuste o tamanho da imagem do "VS" */
+    object-fit: contain; /* Garante que a imagem seja redimensionada corretamente */
+}
 .duelo-buttons button {
     padding: 10px 20px;
     margin: 10px;
