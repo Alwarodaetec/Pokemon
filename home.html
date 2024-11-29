@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    
+
     <header>
         <img src="imagens/pokemon-logo.png" alt="Logo" class="logo">
         <nav class="nav-links">
@@ -17,16 +19,22 @@
             <a href="equipe.html">EQUIPE</a>
         </nav>
         <div class="right-images">
-            <img src="image1.png" alt="Imagem 1">
-            <img src="image2.png" alt="Imagem 2">
-            <img src="image3.png" alt="Imagem 3">
+            <img src="image1.png">
+            <img src="image2.png">
+            <img src="image3.png">
         </div>
+        
     </header>
+    
+    
     
 
     <section>
         <div class="container">
-            <h1>Buscar Pokémon</h1>
+            
+            <div class="text-comparar">
+                <img src="imagens/BUSCAR-POK-MON-29-11-2024.png" alt="VS">
+            </div>
             <input type="text" id="pokemonInput" placeholder="Digite o Nome do Pokémon ou o ID">
             <button onclick="fetchPokemon()">Buscar</button>    
             <div id="pokemonInfo"></div>
@@ -41,3 +49,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
