@@ -127,4 +127,3 @@ function carregarEquipeMenu() {
 
 // Carregar a equipe no menu ao iniciar
 carregarEquipeMenu();
-
