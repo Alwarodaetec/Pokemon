@@ -2,6 +2,8 @@ let offset = 0; // Posição inicial para a Pokédex
 const limit = 20; // Número de Pokémon por lote
 const pokemonList = document.getElementById('pokemonList');
 const loadMoreButton = document.getElementById('loadMore');
+const team = JSON.parse(localStorage.getItem('equipe')) || [];
+
 
 // Função para carregar Pokémon da Pokédex
 async function loadPokemonBatch(offset, limit) {
@@ -104,3 +106,33 @@ document.getElementById('searchButton').addEventListener('click', () => {
         document.getElementById('evolutionTree').innerHTML = '<p class="error">Por favor, insira um nome ou ID.</p>';
     }
 });
+
+
+
+
+
+
+
+
+// Carregar e exibir Pokémon da equipe nas imagens do menu
+function carregarEquipeMenu() {
+    const equipe = JSON.parse(localStorage.getItem('equipe')) || []; // Recupera a equipe do localStorage
+    const rightImages = document.querySelectorAll('.right-images img');
+
+    // Atualiza as imagens dos Pokémon no menu
+    equipe.forEach((pokemon, index) => {
+        if (index < rightImages.length) { // Evita exceder o número de imagens disponíveis
+            rightImages[index].src = pokemon.sprites.front_default;
+            rightImages[index].alt = pokemon.name;
+        }
+    });
+
+    // Define imagens padrão para espaços restantes
+    for (let i = equipe.length; i < rightImages.length; i++) {
+        rightImages[i].src = 'imagens/placeholder.png'; // Imagem padrão (substitua com o caminho desejado)
+        rightImages[i].alt = 'Placeholder';
+    }
+}
+
+// Carregar a equipe no menu ao iniciar
+carregarEquipeMenu();
