@@ -3,6 +3,9 @@ const limit = 20; // Número de Pokémon por lote
 const pokemonList = document.getElementById("pokemonList");
 const loadMoreButton = document.getElementById("loadMore");
 const API_URL = "https://pokeapi.co/api/v2/pokemon/";
+// Carregar a equipe no menu
+carregarEquipeMenu();
+
 
 let selectedForComparison = 1; // Controla qual lado será preenchido (1 ou 2)
 
@@ -148,3 +151,32 @@ loadMoreButton.addEventListener("click", () => {
 document
     .getElementById("searchButton")
     .addEventListener("click", buscarPokemon);
+
+
+
+
+
+    // Carregar e exibir Pokémon da equipe nas imagens do menu
+function carregarEquipeMenu() {
+    const equipe = JSON.parse(localStorage.getItem('equipe')) || []; // Recupera a equipe do localStorage
+    const rightImages = document.querySelectorAll('.right-images img');
+
+    // Atualiza as imagens dos Pokémon no menu
+    equipe.forEach((pokemon, index) => {
+        if (index < rightImages.length) { // Evita exceder o número de imagens disponíveis
+            rightImages[index].src = pokemon.sprites.front_default;
+            rightImages[index].alt = pokemon.name;
+        }
+    });
+
+    // Define imagens padrão para espaços restantes
+    for (let i = equipe.length; i < rightImages.length; i++) {
+        rightImages[i].src = 'imagens/placeholder.png'; // Imagem padrão (substitua com o caminho desejado)
+        rightImages[i].alt = 'Placeholder';
+    }
+}
+
+
+
+
+
