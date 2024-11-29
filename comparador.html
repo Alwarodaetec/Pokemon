@@ -25,7 +25,9 @@
         
         <div class="pokemon-comparador">
             <div id="pokemon1" class="pokemon-box"></div>
-            <div class="vs"> <img src= "imagens/vs.png"></div>
+            <div class="vs">
+                <img src="imagens/vs.png" alt="VS">
+            </div>
             <div id="pokemon2" class="pokemon-box"></div>
         </div>
         
@@ -33,14 +35,17 @@
             <button onclick="sortearPokemons()">Sortear</button>
             <button onclick="compararPokemons()">Comparar</button>
         </div>
-    </section>
+
+       <!-- Caixa para exibir o resultado da comparação -->
+<div id="comparisonResult" class="comparison-box" style="display: none;">
+    <p id="comparisonText"></p>
+</div>
 
     <section id="pokedex" class="pokedex-container">
         <div id="pokemonList" class="pokemon-list"></div>
         <button id="loadMore" class="load-more">Carregar Mais</button>
     </section>
 
-    
     <script src="comparador.js"></script>
 </body>
 </html>
