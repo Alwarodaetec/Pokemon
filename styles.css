@@ -40,16 +40,49 @@ nav a:hover {
     color: #FFD700; /* Cor de destaque ao passar o mouse */
 }
 
-header .right-images {
-    display: flex;
-    align-items: center;
+/* Garantindo que as imagens da equipe tenham o mesmo estilo */
+.right-images img {
+    width: 40px;  /* Ajuste o tamanho das imagens conforme necessário */
+    margin-right: 10px; /* Espaço entre as imagens */
+    border-radius: 8px;  /* Bordas arredondadas */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    background-color: aliceblue;  /* Cor de fundo AliceBlue */
+    padding: 8px;  /* Adiciona um pouco de preenchimento entre a imagem e a borda */
+    transition: transform 0.3s ease-in-out; /* Transição para efeito ao passar o mouse */
+        height: 40px;  /* Para manter a proporção da imagem */
+        margin-right: 10px; /* Espaço entre as imagens */
+    
 }
 
-header .right-images img {
-    width: 30px; /* Ajuste o tamanho das imagens */
-    height: 30px;
-    margin-left: 10px; /* Espaçamento entre as imagens */
+/* Efeito de hover para aumentar o tamanho e destacar a caixa */
+.right-images img:hover {
+    transform: scale(1.05);  /* Aumenta a imagem levemente ao passar o mouse */
 }
+
+/* Ajusta o estilo das imagens dentro da seção de Pokémon na Pokédex */
+.pokemon-card img {
+    width: 100%;  /* Imagens devem ocupar toda a largura do card */
+    height: auto;  /* Para manter a proporção da imagem */
+    border-radius: 8px;  /* Bordas arredondadas */
+}
+
+/* Garantir que as imagens do menu e os Pokémon dentro da equipe tenham a mesma estética */
+.team-member img {
+    width: 80px;  /* Ajuste o tamanho conforme necessário */
+    height: 80px;  /* Para manter a proporção */
+    border-radius: 8px;  /* Bordas arredondadas */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    background-color: aliceblue;  /* Cor de fundo AliceBlue */
+    padding: 8px;  /* Adiciona um pequeno preenchimento */
+    transition: transform 0.3s ease-in-out; /* Transição para efeito de hover */
+}
+
+/* Efeito de hover para a imagem da equipe */
+.team-member img:hover {
+    transform: scale(1.05);  /* Aumenta a imagem levemente ao passar o mouse */
+}
+
+
 
 
 .logo {
