@@ -103,8 +103,6 @@ function displayPokemon(pokemon) {
     `;
 }
 
-
-
 // Carregar e exibir Pokémon da equipe nas imagens do menu
 function carregarEquipeMenu() {
     const equipe = JSON.parse(localStorage.getItem('equipe')) || []; // Recupera a equipe do localStorage
@@ -127,3 +125,4 @@ function carregarEquipeMenu() {
 
 // Carregar a equipe no menu ao iniciar
 carregarEquipeMenu();
+
