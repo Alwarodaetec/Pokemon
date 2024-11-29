@@ -5,6 +5,11 @@ const maxTeamSize = 3; // Tamanho máximo da equipe
 const teamMembers = document.getElementById('teamMembers');
 const pokemonList = document.getElementById('pokemonList');
 const loadMoreButton = document.getElementById('loadMore');
+// Carregar equipe do localStorage ao iniciar
+carregarEquipeLocal();
+
+
+
 
 // Função para carregar Pokémon da Pokédex
 async function loadPokemonBatch(offset, limit) {
@@ -91,6 +96,7 @@ async function fetchPokemon() {
 }
 
 // Função para adicionar um Pokémon à equipe
+// Modifique a função addToTeam para incluir salvar no localStorage
 function addToTeam(pokemon) {
     if (team.length >= maxTeamSize) {
         alert('A equipe já está completa com 3 Pokémon!');
@@ -104,14 +110,53 @@ function addToTeam(pokemon) {
 
     team.push(pokemon);
     updateTeamDisplay();
+    salvarEquipeLocal(); // Salvar equipe atualizada
 }
 
-// Função para remover um Pokémon da equipe
+
+// Salvar equipe no localStorage
+function salvarEquipeLocal() {
+    localStorage.setItem('equipe', JSON.stringify(team));
+}
+
+
+
+// Carregar equipe do localStorage
+function carregarEquipeLocal() {
+    const equipeSalva = JSON.parse(localStorage.getItem('equipe'));
+    if (equipeSalva && Array.isArray(equipeSalva)) {
+        team.length = 0; // Limpa o array atual
+        equipeSalva.forEach(pokemon => team.push(pokemon)); // Reinsere os Pokémon na equipe
+        updateTeamDisplay(); // Atualiza a interface com a equipe carregada
+    }
+}
+
+// Salvar a equipe sempre que atualizar
+function addToTeam(pokemon) {
+    if (team.length >= maxTeamSize) {
+        alert('A equipe já está completa com 3 Pokémon!');
+        return;
+    }
+
+    if (team.find(member => member.id === pokemon.id)) {
+        alert('Este Pokémon já está na equipe!');
+        return;
+    }
+
+    team.push(pokemon);
+    updateTeamDisplay();
+    salvarEquipeLocal(); // Salvar equipe atualizada
+}
+
+
+
+// Modifique a função removeFromTeam para salvar no localStorage
 function removeFromTeam(pokemonId) {
     const index = team.findIndex(member => member.id === pokemonId);
     if (index !== -1) {
         team.splice(index, 1); // Remove o Pokémon pelo índice
         updateTeamDisplay();
+        salvarEquipeLocal(); // Salvar equipe atualizada
     }
 }
 
@@ -126,3 +171,11 @@ loadPokemonBatch(offset, limit);
 
 // Inicializa as caixas de equipe com as imagens padrão
 updateTeamDisplay();
+
+
+
+
+
+
+
+
