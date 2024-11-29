@@ -1,8 +1,10 @@
 let offset = 0; // Posição inicial para a Pokédex
 const limit = 20; // Número de Pokémon por lote
-const pokemonList = document.getElementById('pokemonList');
-const loadMoreButton = document.getElementById('loadMore');
+const pokemonList = document.getElementById("pokemonList");
+const loadMoreButton = document.getElementById("loadMore");
 const API_URL = "https://pokeapi.co/api/v2/pokemon/";
+
+let selectedForComparison = 1; // Controla qual lado será preenchido (1 ou 2)
 
 // Função para carregar Pokémon da Pokédex
 async function loadPokemonBatch(offset, limit) {
@@ -17,31 +19,36 @@ async function addPokemonCard(pokemon) {
     const response = await fetch(pokemon.url);
     const details = await response.json();
 
-    const card = document.createElement('div');
-    card.classList.add('pokemon-card');
+    const card = document.createElement("div");
+    card.classList.add("pokemon-card");
     card.innerHTML = `
         <img src="${details.sprites.front_default}" alt="${details.name}">
         <h3>${details.name.charAt(0).toUpperCase() + details.name.slice(1)}</h3>
     `;
 
-    // Adiciona evento de clique para exibir árvore de evolução
-    card.addEventListener('click', () => fetchEvolutionTree(details.name));
+    // Adiciona evento de clique para adicionar ao comparador
+    card.addEventListener("click", () => addToComparator(details));
     pokemonList.appendChild(card);
 }
 
-// Carregar os primeiros Pokémon ao iniciar
-loadPokemonBatch(offset, limit);
-
-// Botão para carregar mais Pokémon
-loadMoreButton.addEventListener('click', () => {
-    offset += limit;
-    loadPokemonBatch(offset, limit);
-});
-
 // Função para buscar Pokémon por ID ou nome
-async function fetchPokemon(id) {
+async function buscarPokemon() {
+    const pokemonInput = document.getElementById("pokemonInput");
+    const pokemonNameOrId = pokemonInput.value.trim().toLowerCase();
+
+    if (!pokemonNameOrId) return;
+
+    // Busca o Pokémon quando o botão "Buscar Pokémon" for clicado
+    const pokemon = await fetchPokemon(pokemonNameOrId);
+    if (pokemon) {
+        addToComparator(pokemon);
+    }
+}
+
+// Função para buscar Pokémon da API
+async function fetchPokemon(nameOrId) {
     try {
-        const response = await fetch(`${API_URL}${id}`);
+        const response = await fetch(`${API_URL}${nameOrId}`);
         if (!response.ok) throw new Error("Pokémon não encontrado");
         return await response.json();
     } catch (error) {
@@ -66,6 +73,14 @@ function exibirPokemon(pokemon, containerId) {
     `;
 }
 
+// Função para adicionar o Pokémon ao comparador
+function addToComparator(pokemon) {
+    const containerId = selectedForComparison === 1 ? "pokemon1" : "pokemon2";
+    exibirPokemon(pokemon, containerId);
+
+    // Alterna o lado para o próximo clique
+    selectedForComparison = selectedForComparison === 1 ? 2 : 1;
+}
 
 // Sortear Pokémon aleatórios
 async function sortearPokemons() {
@@ -92,12 +107,16 @@ function compararPokemons() {
 
     // Extrai as informações dos Pokémon
     const pokemon1Name = pokemon1Container.querySelector("h3").innerText;
-    const pokemon1Weight = pokemon1Container.querySelector("p:nth-child(3)").innerText;
-    const pokemon1Height = pokemon1Container.querySelector("p:nth-child(4)").innerText;
+    const pokemon1Weight =
+        pokemon1Container.querySelector("p:nth-child(3)").innerText;
+    const pokemon1Height =
+        pokemon1Container.querySelector("p:nth-child(4)").innerText;
 
     const pokemon2Name = pokemon2Container.querySelector("h3").innerText;
-    const pokemon2Weight = pokemon2Container.querySelector("p:nth-child(3)").innerText;
-    const pokemon2Height = pokemon2Container.querySelector("p:nth-child(4)").innerText;
+    const pokemon2Weight =
+        pokemon2Container.querySelector("p:nth-child(3)").innerText;
+    const pokemon2Height =
+        pokemon2Container.querySelector("p:nth-child(4)").innerText;
 
     // Cria o texto da comparação
     const comparisonText = `
@@ -116,64 +135,16 @@ function compararPokemons() {
     comparisonResult.style.display = "block"; // Torna a caixa visível
 }
 
+// Carregar os primeiros Pokémon ao iniciar
+loadPokemonBatch(offset, limit);
 
-// Função para buscar árvore de evolução
-async function fetchEvolutionTree(pokemonNameOrId) {
-    const evolutionTreeContainer = document.getElementById('evolutionTree');
-    evolutionTreeContainer.innerHTML = '<p>Carregando...</p>';
+// Botão para carregar mais Pokémon
+loadMoreButton.addEventListener("click", () => {
+    offset += limit;
+    loadPokemonBatch(offset, limit);
+});
 
-    const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonNameOrId}/`;
-
-    try {
-        const speciesResponse = await fetch(speciesUrl);
-        if (!speciesResponse.ok) throw new Error('Pokémon não encontrado.');
-
-        const speciesData = await speciesResponse.json();
-        const evolutionChainUrl = speciesData.evolution_chain.url;
-
-        const evolutionResponse = await fetch(evolutionChainUrl);
-        const evolutionData = await evolutionResponse.json();
-
-        const evolutions = [];
-        let currentStage = evolutionData.chain;
-
-        while (currentStage) {
-            evolutions.push(currentStage.species.name);
-            currentStage = currentStage.evolves_to[0];
-        }
-
-        displayEvolutionTree(evolutions);
-    } catch (error) {
-        evolutionTreeContainer.innerHTML = `<p class="error">${error.message}</p>`;
-    }
-}
-
-// Função para renderizar a árvore de evolução
-async function displayEvolutionTree(evolutions) {
-    const evolutionTreeContainer = document.getElementById('evolutionTree');
-    evolutionTreeContainer.innerHTML = '';
-
-    for (const speciesName of evolutions) {
-        const pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${speciesName}`);
-        const pokemonData = await pokemonResponse.json();
-
-        const evolutionCard = document.createElement('div');
-        evolutionCard.classList.add('evolution-card');
-        evolutionCard.innerHTML = `
-            <img src="${pokemonData.sprites.front_default}" alt="${speciesName}">
-            <p>${speciesName.charAt(0).toUpperCase() + speciesName.slice(1)}</p>
-        `;
-        evolutionTreeContainer.appendChild(evolutionCard);
-    }
-}
-
-let selectedForComparison = 1; // Controla qual lado será preenchido (1 ou 2)
-
-// Função para adicionar o Pokémon ao comparador
-function addToComparator(pokemon) {
-    const containerId = selectedForComparison === 1 ? "pokemon1" : "pokemon2";
-    exibirPokemon(pokemon, containerId);
-
-    // Alterna o lado para o próximo clique
-    selectedForComparison = selectedForComparison === 1 ? 2 : 1;
-}
+// Adiciona evento de clique ao botão de busca
+document
+    .getElementById("searchButton")
+    .addEventListener("click", buscarPokemon);
