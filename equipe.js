@@ -148,8 +148,6 @@ function addToTeam(pokemon) {
     salvarEquipeLocal(); // Salvar equipe atualizada
 }
 
-
-
 // Modifique a função removeFromTeam para salvar no localStorage
 function removeFromTeam(pokemonId) {
     const index = team.findIndex(member => member.id === pokemonId);
