@@ -34,19 +34,43 @@ async function addPokemonCard(pokemon) {
     pokemonList.appendChild(card);
 }
 
-
 // Função para atualizar a exibição da equipe
 function updateTeamDisplay() {
-    teamMembers.innerHTML = '';
-    team.forEach(member => {
+    teamMembers.innerHTML = ''; // Limpa o conteúdo atual
+
+    // Adiciona um card para cada Pokémon na equipe
+    team.forEach((member, index) => {
         const card = document.createElement('div');
         card.classList.add('team-member');
         card.innerHTML = `
             <img src="${member.sprites.front_default}" alt="${member.name}">
             <h3>${member.name.charAt(0).toUpperCase() + member.name.slice(1)}</h3>
+            <button onclick="removeFromTeam(${member.id})">Remover</button>
         `;
         teamMembers.appendChild(card);
+
+        // Atualiza as imagens no canto superior direito conforme os Pokémon são adicionados
+        const teamImage = document.getElementById(`teamImage${index + 1}`);
+        if (teamImage) {
+            teamImage.src = member.sprites.front_default; // Atualiza a imagem com o sprite do Pokémon
+            teamImage.alt = member.name; // Atualiza o texto alternativo com o nome do Pokémon
+        }
     });
+
+    // Preenche os espaços vazios se a equipe tiver menos de 3 Pokémon
+    for (let i = team.length; i < maxTeamSize; i++) {
+        const emptySlot = document.createElement('div');
+        emptySlot.classList.add('team-member');
+        emptySlot.style.backgroundColor = '#f0f0f0'; // Fundo cinza claro
+        teamMembers.appendChild(emptySlot);
+
+        // Reseta as imagens no canto superior direito para as padrão
+        const teamImage = document.getElementById(`teamImage${i + 1}`);
+        if (teamImage) {
+            teamImage.src = `image${i + 1}.png`; // Reseta a imagem para a original
+            teamImage.alt = `Imagem ${i + 1}`; // Atualiza o texto alternativo
+        }
+    }
 }
 
 // Função para buscar um Pokémon pelo nome ou ID e adicionar à equipe
@@ -66,17 +90,6 @@ async function fetchPokemon() {
     }
 }
 
-// Event Listener para o botão "Carregar Mais"
-loadMoreButton.addEventListener('click', () => {
-    offset += limit;
-    loadPokemonBatch(offset, limit);
-});
-
-// Carregar os primeiros Pokémon ao iniciar
-loadPokemonBatch(offset, limit);
-
-
-
 // Função para adicionar um Pokémon à equipe
 function addToTeam(pokemon) {
     if (team.length >= maxTeamSize) {
@@ -84,10 +97,10 @@ function addToTeam(pokemon) {
         return;
     }
 
-    /*if (team.find(member => member.id === pokemon.id)) {
+    if (team.find(member => member.id === pokemon.id)) {
         alert('Este Pokémon já está na equipe!');
         return;
-    } */
+    }
 
     team.push(pokemon);
     updateTeamDisplay();
@@ -102,27 +115,14 @@ function removeFromTeam(pokemonId) {
     }
 }
 
-// Função para atualizar a exibição da equipe
-function updateTeamDisplay() {
-    teamMembers.innerHTML = ''; // Limpa o conteúdo atual
+// Event Listener para o botão "Carregar Mais"
+loadMoreButton.addEventListener('click', () => {
+    offset += limit;
+    loadPokemonBatch(offset, limit);
+});
 
-    // Adiciona um card para cada Pokémon na equipe
-    team.forEach(member => {
-        const card = document.createElement('div');
-        card.classList.add('team-member');
-        card.innerHTML = `
-            <img src="${member.sprites.front_default}" alt="${member.name}">
-            <h3>${member.name.charAt(0).toUpperCase() + member.name.slice(1)}</h3>
-            <button onclick="removeFromTeam(${member.id})">Remover</button>
-        `;
-        teamMembers.appendChild(card);
-    });
+// Carregar os primeiros Pokémon ao iniciar
+loadPokemonBatch(offset, limit);
 
-    // Preenche os espaços vazios se a equipe tiver menos de 3 Pokémon
-    for (let i = team.length; i < maxTeamSize; i++) {
-        const emptySlot = document.createElement('div');
-        emptySlot.classList.add('team-member');
-        emptySlot.style.backgroundColor = '#f0f0f0'; // Fundo cinza claro
-        teamMembers.appendChild(emptySlot);
-    }
-}
+// Inicializa as caixas de equipe com as imagens padrão
+updateTeamDisplay();
