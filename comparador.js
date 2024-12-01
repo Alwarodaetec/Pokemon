@@ -190,26 +190,3 @@ function carregarEquipeMenu() {
         rightImages[i].alt = 'Placeholder';
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
