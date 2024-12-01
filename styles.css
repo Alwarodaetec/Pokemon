@@ -454,11 +454,6 @@ button {
 
 }
 
-
-
-
-
-
 .foto-equipe {
     display: flex;
     justify-content: center; /* Centraliza horizontalmente */
@@ -472,3 +467,15 @@ button {
     height: 350px; 
     object-fit: contain; 
 }
+
+
+.botao-c {
+
+    margin-bottom: 20px;
+
+}
+
+
+
+
+
