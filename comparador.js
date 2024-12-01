@@ -74,7 +74,9 @@ function exibirPokemon(pokemon, containerId) {
         <p>Peso: ${pokemon.weight} kg</p>
         <p>Altura: ${pokemon.height} m</p>
     `;
+    container.dataset.details = JSON.stringify(pokemon); // Armazena os detalhes completos
 }
+
 
 // Função para adicionar o Pokémon ao comparador
 function addToComparator(pokemon) {
@@ -98,6 +100,7 @@ async function sortearPokemons() {
 }
 
 // Função para comparar os Pokémon
+// Função para comparar os Pokémon
 function compararPokemons() {
     const pokemon1Container = document.getElementById("pokemon1");
     const pokemon2Container = document.getElementById("pokemon2");
@@ -109,34 +112,46 @@ function compararPokemons() {
     }
 
     // Extrai as informações dos Pokémon
-    const pokemon1Name = pokemon1Container.querySelector("h3").innerText;
-    const pokemon1Weight =
-        pokemon1Container.querySelector("p:nth-child(3)").innerText;
-    const pokemon1Height =
-        pokemon1Container.querySelector("p:nth-child(4)").innerText;
-
-    const pokemon2Name = pokemon2Container.querySelector("h3").innerText;
-    const pokemon2Weight =
-        pokemon2Container.querySelector("p:nth-child(3)").innerText;
-    const pokemon2Height =
-        pokemon2Container.querySelector("p:nth-child(4)").innerText;
+    const pokemon1 = {
+        name: pokemon1Container.querySelector("h3").innerText,
+        weight: pokemon1Container.querySelector("p:nth-child(3)").innerText,
+        height: pokemon1Container.querySelector("p:nth-child(4)").innerText,
+        details: JSON.parse(pokemon1Container.dataset.details)
+    };
+    const pokemon2 = {
+        name: pokemon2Container.querySelector("h3").innerText,
+        weight: pokemon2Container.querySelector("p:nth-child(3)").innerText,
+        height: pokemon2Container.querySelector("p:nth-child(4)").innerText,
+        details: JSON.parse(pokemon2Container.dataset.details)
+    };
 
     // Cria o texto da comparação
+    const createStatsText = (pokemon) => `
+        <strong>${pokemon.name}</strong><br>
+        Peso: ${pokemon.weight}<br>
+        Altura: ${pokemon.height}<br>
+        Tipo: ${pokemon.details.types.map(type => type.type.name).join(", ")}<br>
+        Habilidades: ${pokemon.details.abilities.map(ability => ability.ability.name).join(", ")}<br>
+        Estatísticas: 
+        <ul>
+            ${pokemon.details.stats.map(stat => `<li>${stat.stat.name.toUpperCase()}: ${stat.base_stat}</li>`).join("")}
+        </ul>
+    `;
+
     const comparisonText = `
-        <strong>Comparação entre:</strong><br>
-        <strong>${pokemon1Name}</strong><br>
-        Peso: ${pokemon1Weight} | Altura: ${pokemon1Height} <br><br>
-        <strong>${pokemon2Name}</strong><br>
-        Peso: ${pokemon2Weight} | Altura: ${pokemon2Height}
+        <div class="comparison-card">${createStatsText(pokemon1)}</div>
+        <div class="comparison-vs">VS</div>
+        <div class="comparison-card">${createStatsText(pokemon2)}</div>
     `;
 
     // Exibe o resultado na caixa de comparação
     const comparisonResult = document.getElementById("comparisonResult");
-    const comparisonParagraph = document.getElementById("comparisonText");
+    const comparisonContent = document.getElementById("comparisonText");
 
-    comparisonParagraph.innerHTML = comparisonText;
+    comparisonContent.innerHTML = comparisonText;
     comparisonResult.style.display = "block"; // Torna a caixa visível
 }
+
 
 // Carregar os primeiros Pokémon ao iniciar
 loadPokemonBatch(offset, limit);
@@ -175,6 +190,18 @@ function carregarEquipeMenu() {
         rightImages[i].alt = 'Placeholder';
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
